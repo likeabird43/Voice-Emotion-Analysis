@@ -5,3 +5,8 @@ __pycache__/
 .venv/
 *.pyc
 .DS_Store
+opensmile_features.csv
+dataset_analysis.csv
+frequency_dynamics_experiment.csv
+main_frequency_experiment.csv
+rf_librosa_confusion_matrix.png
