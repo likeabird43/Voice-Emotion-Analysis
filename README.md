@@ -46,7 +46,7 @@ This shift — from absolute classification to **personal deviation detection** 
 
 These findings emerged from **perceptual observation** of the recordings, then were **statistically verified** on the full dataset.
 
-### Finding 1 — Sample Rate Mismatch Corrupts Features
+### Finding 1 — Perceptual Detection of Sample Rate Mismatch
 Initial extraction mixed 44100Hz stereo and 48000Hz mono files.  
 This caused a **230Hz gap in spectral centroid** on the stressed class — making features incomparable across classes.  
 All audio was re-standardized to **16kHz mono** before analysis.
@@ -277,7 +277,7 @@ The key contribution is **automatic neutral segment detection** from natural spe
 If you use this work, please cite:
 ```
 @misc{voicemooddevice2025,
-  author = {Janet},
+  author = {Janet Lee},
   title  = {Voice Mood Device},
   year   = {2025},
   url    = {https://github.com/likeabird43/Voice-Emotion-Analysis}
