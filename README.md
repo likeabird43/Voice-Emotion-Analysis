@@ -168,6 +168,9 @@ Raw Audio (any sr, any channel)
 > Achieved on real-world noisy recordings (cafe + outdoor), single speaker, 114 utterances.  
 > Competitive with noisy-condition SER literature (typical range: 0.60–0.75).
 
+**Hyperparameter Tuning:**  
+GridSearchCV (27 combinations, 135 fits) confirmed `max_depth=10, n_estimators=500` as optimal. Training accuracy 100% vs CV accuracy 59.5% gap identified as overfitting — root cause: class imbalance (`outside_mixed`: n=2). Larger dataset is the primary bottleneck.
+
 ---
 
 ## Dataset
