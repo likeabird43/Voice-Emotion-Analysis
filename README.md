@@ -255,6 +255,56 @@ python extract_highband.py
 - Mobile app with background audio collection (user consent required)
 
 ---
+## Multimodal Fusion System
+
+### Architecture
+```
+Audio File
+    │
+    ├── Whisper (STT) → Korean text
+    │                       │
+    │                       └── GPT-4o-mini → sentiment score
+    │
+    └── Librosa → acoustic features → Random Forest
+                                            │
+                            confidence-weighted fusion
+                                            │
+                                    final emotion
+```
+
+### Results
+
+| System | Accuracy | Happy F1 | Stressed F1 | Tired F1 |
+|---|---|---|---|---|
+| RF (acoustic only) | 0.79 | 0.88 | 0.55 | 0.93 |
+| Fusion (RoBERTa) | 0.50 | 0.60 | 0.33 | 0.29 |
+| Fusion (GPT-4o-mini) | 0.79 | 0.94 | 0.50 | 0.93 |
+
+### Key Findings
+
+**Finding 1 — Text signal strength varies by emotion**
+```
+happy    → "오늘 기분 진짜 좋다" → positive 1.0  (high text confidence)
+stressed → "아 오늘 진짜 바쁘다" → neutral 0.6   (low text confidence)
+tired    → (silence)            → no signal      (no text confidence)
+```
+
+**Finding 2 — Emotion intensity is detectable only through acoustics**
+stressed vs stressed_intense — identical text content, different acoustic features (pitch, energy).
+Emotion intensity cannot be captured by text alone.
+
+**Finding 3 — Korean sentiment must be analyzed directly, not via translation**
+RoBERTa (English translation): stressed F1 0.33
+GPT-4o-mini (Korean direct): stressed F1 0.50
+Translation causes measurable loss of emotional nuance.
+
+### Design Decision
+Confidence-weighted fusion: text signal weighted by Whisper's `no_speech_prob`.
+When speech is unclear (high noise), acoustic features dominate.
+When speech is clear, text and acoustic signals are combined.
+
+---
+
 
 ## Related Work
 
